@@ -21,7 +21,7 @@
     if (self.itemDescription) {
         return [self imagesFromHTMLString:self.itemDescription];
     }
-    
+
     return nil;
 }
 
@@ -30,7 +30,7 @@
     if (self.content) {
         return [self imagesFromHTMLString:self.content];
     }
-    
+
     return nil;
 }
 
@@ -39,21 +39,21 @@
 -(NSArray *)imagesFromHTMLString:(NSString *)htmlstr
 {
     NSMutableArray *imagesURLStringArray = [[NSMutableArray alloc] init];
-    
+
     NSError *error;
-    
-    NSRegularExpression *regex = [NSRegularExpression         
+
+    NSRegularExpression *regex = [NSRegularExpression
                                   regularExpressionWithPattern:@"(https?)\\S*(png|jpg|jpeg|gif)"
                                   options:NSRegularExpressionCaseInsensitive
                                   error:&error];
-    
-    [regex enumerateMatchesInString:htmlstr 
-                            options:0 
-                              range:NSMakeRange(0, htmlstr.length) 
+
+    [regex enumerateMatchesInString:htmlstr
+                            options:0
+                              range:NSMakeRange(0, htmlstr.length)
                          usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
                              [imagesURLStringArray addObject:[htmlstr substringWithRange:result.range]];
-                         }];    
-    
+                         }];
+
     return [NSArray arrayWithArray:imagesURLStringArray];
 }
 
@@ -72,6 +72,7 @@
         _pubDate = [aDecoder decodeObjectForKey:@"pubDate"];
         _author = [aDecoder decodeObjectForKey:@"author"];
         _guid = [aDecoder decodeObjectForKey:@"guid"];
+        _thumbnailURL = [aDecoder decodeObjectOfClass:[NSString class] forKey:@"thumbnailURL"];
     }
     return self;
 }
@@ -88,6 +89,7 @@
     [aCoder encodeObject:self.pubDate forKey:@"pubDate"];
     [aCoder encodeObject:self.author forKey:@"author"];
     [aCoder encodeObject:self.guid forKey:@"guid"];
+    [aCoder encodeObject:self.thumbnailURL forKey:@"thumbnailURL"];
 }
 
 #pragma mark -
