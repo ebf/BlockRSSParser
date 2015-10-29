@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "BlockRSSParser"
-  s.version      = "2.1.0.1"
+  s.version      = "2.1.0.2"
   s.summary      = "AFNetworkingXMLRequestOperation based RSS parser."
   s.homepage     = "https://github.com/tibo/BlockRSSParser"
 
