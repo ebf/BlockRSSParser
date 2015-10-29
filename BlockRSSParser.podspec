@@ -8,14 +8,13 @@ Pod::Spec.new do |s|
 
   s.author       = { "Thibaut LE LEVIER" => "thibaut@lelevier.fr" }
 
-  s.source       = { :git => "https://github.com/tibo/BlockRSSParser.git", :tag => "2.1" }
+  s.source       = { :git => "https://github.com/ebf/BlockRSSParser.git", :tag => s.version.to_s }
 
   s.requires_arc = true
 
-  s.platform     = :ios
-  s.ios.deployment_target = '6.0'
+  s.platforms    = { :ios => '8.0' }
 
   s.source_files = 'Classes', 'RSSParser/*.{h,m}'
 
-  s.dependency 'AFNetworking', '~> 2.0'
+  s.dependency 'AFNetworking', '~> 3.0.0-beta'
 end

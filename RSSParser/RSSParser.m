@@ -8,7 +8,7 @@
 
 #import "RSSParser.h"
 
-#import "AFHTTPRequestOperation.h"
+#import <AFNetworking/AFHTTPSessionManager.h>
 #import "AFURLResponseSerialization.h"
 
 @implementation RSSParser
@@ -42,22 +42,20 @@
 
     block = [success copy];
 
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [[AFXMLParserResponseSerializer alloc] init];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/xml", @"text/xml",@"application/rss+xml", @"application/atom+xml", nil];
 
-    operation.responseSerializer = [[AFXMLParserResponseSerializer alloc] init];
-    operation.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/xml", @"text/xml",@"application/rss+xml", @"application/atom+xml", nil];
+    NSURLSessionTask *task = [manager dataTaskWithRequest:urlRequest completionHandler:^(NSURLResponse * _Nonnull response, NSXMLParser *responseObject, NSError * _Nullable error) {
+        if (error) {
+            return failure(error);
+        }
 
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        failblock = [failure copy];
-        [(NSXMLParser *)responseObject setDelegate:self];
-        [(NSXMLParser *)responseObject parse];
-    }
-                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                         failure(error);
-                                     }];
-
-    [operation start];
-
+        responseObject.delegate = self;
+        [responseObject parse];
+    }];
+    
+    [task resume];
 }
 
 #pragma mark -
