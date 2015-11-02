@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "BlockRSSParser"
-  s.version      = "2.1.0.2"
+  s.version      = "2.1.0.3"
   s.summary      = "AFNetworkingXMLRequestOperation based RSS parser."
   s.homepage     = "https://github.com/tibo/BlockRSSParser"
 
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
 
-  s.platforms    = { :ios => '8.0' }
+  s.platforms    = { :ios => '8.0', :watchos => '2.0' }
 
   s.source_files = 'Classes', 'RSSParser/*.{h,m}'
 
